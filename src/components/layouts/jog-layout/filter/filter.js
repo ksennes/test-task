@@ -4,7 +4,7 @@ import "./filter.scss";
 
 export const Filter = () => {
   return (
-    <div className="jog-layout__filter">
+    <div className="filter">
       <div className="date-picker">
         <h5>Date from</h5>
         <input></input>

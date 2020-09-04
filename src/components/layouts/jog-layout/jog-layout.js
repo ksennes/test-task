@@ -8,7 +8,7 @@ import { AddButton } from "./add-button/add-button";
 import { AddModal } from "./add-modal/add-modal";
 
 export const JogLayout = () => {
-  const isListExist = true;
+  const isListExist = false;
   const [showAddModal, setShowAddMOdal] = useState(false);
 
   const handleAddClick = () => {

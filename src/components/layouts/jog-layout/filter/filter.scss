@@ -1,0 +1,36 @@
+.filter {
+  width: 100%;
+  height: 60px;
+  background-color: #eaeaea;
+  display: flex;
+  justify-content: center;
+
+  input {
+    width: 100px;
+    height: 31px;
+    border-radius: 11px;
+    border: solid 1px #979797;
+    background-color: #ffffff;
+    margin-left: 15px;
+  }
+
+  .date-picker {
+    margin-left: 45px;
+    display: flex;
+    align-items: center;
+
+    h5 {
+      color: #747474;
+    }
+  }
+}
+
+@media (max-width: 375px) {
+  &__filter {
+    width: 72px;
+
+    .date-picker {
+      margin-left: 16px;
+    }
+  }
+}

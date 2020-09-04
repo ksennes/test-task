@@ -13,11 +13,16 @@
       color: #747474;
       margin-bottom: 9px;
     }
-  }
 
-  &__details {
     h4 {
       margin-bottom: 12px;
     }
+  }
+}
+
+@media (max-width: 375px) {
+  .single-jog {
+    margin: 45px 0;
+    align-items: flex-start;
   }
 }

@@ -16,3 +16,11 @@
     margin-bottom: 35px;
   }
 }
+
+@media (max-width: 375px) {
+  .info-layout {
+    &__container {
+      padding: 25px;
+    }
+  }
+}
