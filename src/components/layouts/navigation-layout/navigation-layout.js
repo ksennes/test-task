@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './navigation-layout.css';
+import './navigation-layout.scss';
 import logo from '../../../img/logo.png';
 
 export const NavigationLayout = () => {
