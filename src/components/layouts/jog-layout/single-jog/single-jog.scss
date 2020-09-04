@@ -1,0 +1,23 @@
+.single-jog {
+  display: flex;
+  align-items: center;
+  margin-top: 50px;
+  font-size: 14px;
+
+  &__icon {
+    margin-right: 46px;
+  }
+
+  &__details {
+    p {
+      color: #747474;
+      margin-bottom: 9px;
+    }
+  }
+
+  &__details {
+    h4 {
+      margin-bottom: 12px;
+    }
+  }
+}
