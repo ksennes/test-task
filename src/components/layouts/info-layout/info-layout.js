@@ -6,7 +6,7 @@ import { NavigationLayout } from "../navigation-layout/navigation-layout";
 export const InfoLayout = () => {
   return (
     <>
-      <NavigationLayout />
+      <NavigationLayout isLogged={true} activeLink='INFO'/>
       <div className="info-layout">
         <div className="info-layout__container">
           <h1>INFO</h1>

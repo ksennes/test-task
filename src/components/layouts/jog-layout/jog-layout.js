@@ -7,7 +7,6 @@ import { SingleJog } from "./single-jog/single-jog";
 import { AddButton } from "./add-button/add-button";
 import { AddModal } from "./add-modal/add-modal";
 
-import { getTokenSelector } from "../../../redux/modules/auth/auth.selectors";
 import { getJogsSelector } from '../../../redux/modules/jogs/jogs.selectors';
 import { useDispatch, useSelector } from "react-redux";
 import { getJogsAction } from "../../../redux/modules/jogs/jogs.actions";
@@ -38,7 +37,7 @@ export const JogLayout = () => {
 
   return (
     <>
-      <NavigationLayout isLogged={isLogged}/>
+      <NavigationLayout isLogged={isLogged} activeLink='JOGS'/>
       <div className="jog-layout">
         {jogs ? (
           <>
