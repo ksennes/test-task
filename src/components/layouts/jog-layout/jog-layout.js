@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import "./jog-layout.scss";
 import sad from "../../../img/sad-rounded-square-emoticon.png";
@@ -7,30 +7,47 @@ import { SingleJog } from "./single-jog/single-jog";
 import { AddButton } from "./add-button/add-button";
 import { AddModal } from "./add-modal/add-modal";
 
+import { getTokenSelector } from "../../../redux/modules/auth/auth.selectors";
+import { getJogsSelector } from '../../../redux/modules/jogs/jogs.selectors';
+import { useDispatch, useSelector } from "react-redux";
+import { getJogsAction } from "../../../redux/modules/jogs/jogs.actions";
+
 export const JogLayout = () => {
-  const isListExist = false;
+  const isLogged = true;
+  const token = localStorage.getItem('token');
+
   const [showAddModal, setShowAddMOdal] = useState(false);
+
+  const jogs = useSelector(getJogsSelector);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const getJogs = () => dispatch(getJogsAction(token));
+    getJogs();
+  }, [dispatch])
+
 
   const handleAddClick = () => {
     setShowAddMOdal(true);
-  }
+  };
 
   const handleAddHide = () => {
     setShowAddMOdal(false);
-  }
+  };
 
   return (
     <>
-      <NavigationLayout />
+      <NavigationLayout isLogged={isLogged}/>
       <div className="jog-layout">
-         {isListExist ? (
+        {jogs ? (
           <>
             <div className="jog-layout__list">
-              {jogList.map((jog) => (
+              {jogs.map((jog) => (
                 <SingleJog {...jog} />
               ))}
             </div>
-            <AddButton onClick={()=> handleAddClick()} />
+            <AddButton onClick={() => handleAddClick()} />
           </>
         ) : (
           <div className="nothing-found">
@@ -38,12 +55,15 @@ export const JogLayout = () => {
               <img src={sad} />
             </div>
             <p>Nothing is there</p>
-            <button className="nothing-found__add-button" onClick={()=> handleAddClick()}>
+            <button
+              className="nothing-found__add-button"
+              onClick={() => handleAddClick()}
+            >
               Create your jog first
             </button>
           </div>
         )}
-          <AddModal showAddmodal={showAddModal} onHide={()=> handleAddHide()}/>
+        <AddModal showAddmodal={showAddModal} onHide={() => handleAddHide()} />
       </div>
     </>
   );
