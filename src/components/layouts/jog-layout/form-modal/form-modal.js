@@ -1,31 +1,30 @@
 import React, { useState } from "react";
 
-import "./add-modal.scss";
+import "./form-modal.scss";
 
 import cancel from "../../../../img/cancel.png";
 
-export const AddModal = ({ showAddmodal, onHide }) => {
-
+export const FormModal = ({ show, onHide, jogData, handleChange }) => {
   return (
     <div
-      className="add-modal"
-      style={showAddmodal ? { display: "block" } : { display: "none" }}
+      className="modal"
+      style={show ? { display: "block" } : { display: "none" }}
     >
       <div className="cancel" onClick={() => onHide()}>
         <img src={cancel}/>
       </div>
-      <form className="add-form">
+      <form className="form">
         <div className="form-group">
           <label for="distance">Distance</label>
-          <input type="text" className="form-control" id="distance" />
+          <input type="text" className="form-control" id="distance" value={jogData.distance} onChange={e => handleChange(e)}/>
         </div>
         <div className="form-group">
           <label for="time">Time</label>
-          <input type="text" className="form-control" id="time" />
+          <input type="text" className="form-control" id="time" value={jogData.time} onChange={e => handleChange(e)}/>
         </div>
         <div className="form-group">
           <label for="date">Date</label>
-          <input type="text" className="form-control" id="date" />
+          <input type="text" className="form-control" id="date" value={jogData.date} onChange={e => handleChange(e)}/>
         </div>
         <button type="submit" className="submit-button">
           Save

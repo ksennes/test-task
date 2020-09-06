@@ -1,21 +1,36 @@
 import React, { useState, useEffect } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 import "./jog-layout.scss";
 import sad from "../../../img/sad-rounded-square-emoticon.png";
+import editPen from "../../../img/pen.png";
 import { NavigationLayout } from "../navigation-layout/navigation-layout";
 import { SingleJog } from "./single-jog/single-jog";
 import { AddButton } from "./add-button/add-button";
-import { AddModal } from "./add-modal/add-modal";
+import { FormModal } from "./form-modal/form-modal";
 
-import { getJogsSelector } from '../../../redux/modules/jogs/jogs.selectors';
+import { getJogsSelector } from "../../../redux/modules/jogs/jogs.selectors";
 import { useDispatch, useSelector } from "react-redux";
 import { getJogsAction } from "../../../redux/modules/jogs/jogs.actions";
 
 export const JogLayout = () => {
   const isLogged = true;
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
 
   const [showAddModal, setShowAddMOdal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [editingJog, setEditingJog] = useState(false);
+  const [showFilter, setShowFilter] = useState(false);
+
+  const [jogData, setJogData] = useState({
+    distance: "",
+    time: "",
+    date: "",
+  });
+
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
 
   const jogs = useSelector(getJogsSelector);
 
@@ -24,29 +39,86 @@ export const JogLayout = () => {
   useEffect(() => {
     const getJogs = () => dispatch(getJogsAction(token));
     getJogs();
-  }, [dispatch])
+  }, [dispatch]);
 
+  const handleOpenEditModal = (jog) => {
+    setJogData(jog);
+    setEditingJog(true);
+    setShowEditModal(true);
+  };
 
-  const handleAddClick = () => {
+  const handleOpenModal = () => {
+    setJogData({
+      distance: "",
+      time: "",
+      date: "",
+    });
     setShowAddMOdal(true);
   };
 
-  const handleAddHide = () => {
-    setShowAddMOdal(false);
+  const handleFilter = () => {
+    setShowFilter(!showFilter);
+  };
+
+  const handleChange = (e) => {
+    setJogData({ [e.target.id]: e.target.value });
   };
 
   return (
     <>
-      <NavigationLayout isLogged={isLogged} activeLink='JOGS'/>
+      <NavigationLayout
+        isLogged={isLogged}
+        activeLink="JOGS"
+        isFilterOpen={showFilter}
+        handleFilter={handleFilter}
+      />
       <div className="jog-layout">
+        <div
+          className="filter"
+          style={showFilter ? { display: "flex" } : { display: "none" }}
+        >
+          <div className="date-picker">
+            <h5>Date from</h5>
+            <DatePicker
+              dateFormat="dd.MM.yyyy"
+              selected={startDate}
+              onChange={(date) => setStartDate(date)}
+              selectsStart
+              startDate={startDate}
+              endDate={endDate}
+            />
+          </div>
+          <div className="date-picker">
+            <h5>Date to</h5>
+            <DatePicker
+              dateFormat="dd.MM.yyyy"
+              selected={endDate}
+              onChange={(date) => setEndDate(date)}
+              selectsEnd
+              startDate={startDate}
+              endDate={endDate}
+              minDate={startDate}
+            />
+          </div>
+        </div>
         {jogs ? (
           <>
             <div className="jog-layout__list">
-              {jogs.map((jog) => (
-                <SingleJog {...jog} />
+              {jogs.map((jog, index) => (
+                <>
+                  <div className="container">
+                    <SingleJog {...jog} key={index} />
+                    <div
+                      className="edit-pen"
+                      onClick={() => handleOpenEditModal(jog)}
+                    >
+                      <img src={editPen} />
+                    </div>
+                  </div>
+                </>
               ))}
             </div>
-            <AddButton onClick={() => handleAddClick()} />
+            <AddButton onClick={() => handleOpenModal()} />
           </>
         ) : (
           <div className="nothing-found">
@@ -56,41 +128,27 @@ export const JogLayout = () => {
             <p>Nothing is there</p>
             <button
               className="nothing-found__add-button"
-              onClick={() => handleAddClick()}
+              onClick={() => handleOpenModal()}
             >
               Create your jog first
             </button>
           </div>
         )}
-        <AddModal showAddmodal={showAddModal} onHide={() => handleAddHide()} />
+        <FormModal
+          show={showAddModal}
+          onHide={() => setShowAddMOdal(false)}
+          jogData={jogData}
+          handleChange={(e) => handleChange(e)}
+        />
+        {editingJog && (
+          <FormModal
+            show={showEditModal}
+            onHide={() => setShowEditModal(false)}
+            jogData={jogData}
+            handleChange={(e) => handleChange(e)}
+          />
+        )}
       </div>
     </>
   );
 };
-
-const jogList = [
-  {
-    date: "20.12.2020",
-    speed: "15",
-    distance: "20 km",
-    time: "15 min",
-  },
-  {
-    date: "20.12.2020",
-    speed: "15",
-    distance: "20 km",
-    time: "15 min",
-  },
-  {
-    date: "20.12.2020",
-    speed: "15",
-    distance: "20 km",
-    time: "15 min",
-  },
-  {
-    date: "20.12.2020",
-    speed: "15",
-    distance: "20 km",
-    time: "15 min",
-  },
-];
