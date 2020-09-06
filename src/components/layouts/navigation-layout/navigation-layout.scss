@@ -15,6 +15,16 @@
   }
 
   &__options {
+    display: flex; 
+    align-items: center;
+
+    .filter__icon {
+      margin-right: 36px;
+      margin-left: 56px;
+
+      
+    }
+
     .burger,
     .cross {
       display: none;
