@@ -83,9 +83,7 @@ export const JogLayout = () => {
   const filter = () => {
     const start = startDate ? new Date(startDate) : new Date(null);
     const end = endDate ? new Date(endDate) : new Date();
-
-    console.log('vizvavsya', start, end)
-
+    
     return jogs.filter((jog) => {
       const date = parse(jog.date, "dd.MM.yyyy", new Date());
       return date >= start && date <= end;

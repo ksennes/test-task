@@ -46,8 +46,6 @@ const getJogsFailedAction = (message) => ({
 export const addJogAction = (token, jog) => (dispatch) => {
     dispatch(addJogRequestAction());
 
-    console.log(jog, 'new jog');
-
     addJog(token, jog)
     .then(res => {
         dispatch(addJogSuccessAction(res.data.response));
