@@ -83,6 +83,16 @@
   }
 }
 
+.loader {
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 0.2px;
+  color: #747474;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
 @media (max-width: 375px) {
   &__list {
     .edit-pen {
