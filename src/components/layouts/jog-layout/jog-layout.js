@@ -37,6 +37,7 @@ export const JogLayout = () => {
   const [editingJog, setEditingJog] = useState(false);
   const [showFilter, setShowFilter] = useState(false);
 
+  let filteredJogs = [];
 
   const [jogData, setJogData] = useState({
     distance: " ",
@@ -70,7 +71,7 @@ export const JogLayout = () => {
   };
 
   const handleFilter = () => {
-    if(showFilter) {
+    if (showFilter) {
       setStartDate(null);
       setEndDate(null);
       setShowFilter(false);
@@ -80,16 +81,18 @@ export const JogLayout = () => {
   };
 
   const filter = () => {
-    const start = new Date(startDate) || new Date(null);
-    const end = new Date(endDate) || new Date();
+    const start = startDate ? new Date(startDate) : new Date(null);
+    const end = endDate ? new Date(endDate) : new Date();
 
-    return jogs.filter(jog => {
-      const date = parse(jog.date, 'dd.MM.yyyy', new Date());
+    console.log('vizvavsya', start, end)
+
+    return jogs.filter((jog) => {
+      const date = parse(jog.date, "dd.MM.yyyy", new Date());
       return date >= start && date <= end;
-    })
-  }
+    });
+  };
 
-  if(startDate || endDate) filter();
+  if (startDate || endDate) filteredJogs = filter();
 
   const handleChange = (e) => {
     setJogData({
@@ -118,9 +121,7 @@ export const JogLayout = () => {
         handleFilter={handleFilter}
       />
       {pending ? (
-        <div className='loader'>
-           Loading...
-        </div>
+        <div className="loader">Loading...</div>
       ) : (
         <div className="jog-layout">
           <div
@@ -154,19 +155,33 @@ export const JogLayout = () => {
           {jogs ? (
             <>
               <div className="jog-layout__list">
-                {jogs.map((jog, index) => (
-                  <>
-                    <div className="container">
-                      <SingleJog {...jog} key={index} />
-                      <div
-                        className="edit-pen"
-                        onClick={() => handleOpenEditModal(jog)}
-                      >
-                        <img src={editPen} />
-                      </div>
-                    </div>
-                  </>
-                ))}
+                {startDate || endDate
+                  ? filteredJogs.map((jog, index) => (
+                      <>
+                        <div className="container">
+                          <SingleJog {...jog} key={index} />
+                          <div
+                            className="edit-pen"
+                            onClick={() => handleOpenEditModal(jog)}
+                          >
+                            <img src={editPen} />
+                          </div>
+                        </div>
+                      </>
+                    ))
+                  : jogs.map((jog, index) => (
+                      <>
+                        <div className="container">
+                          <SingleJog {...jog} key={index} />
+                          <div
+                            className="edit-pen"
+                            onClick={() => handleOpenEditModal(jog)}
+                          >
+                            <img src={editPen} />
+                          </div>
+                        </div>
+                      </>
+                    ))}
               </div>
               <AddButton onClick={() => handleOpenModal()} />
             </>

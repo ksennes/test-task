@@ -1,7 +1,7 @@
 .modal {
   position: fixed;
   top: 20%;
-  height: 50%;
+  height: 370px;
   border-radius: 44px;
   background-color: #7ed321;
   padding: 80px 88px 47px 88px;
@@ -28,6 +28,10 @@
     right: 27px;
   }
 
+  .cancel:hover {
+    cursor: pointer;
+  }
+
   .form-group {
     display: flex;
     justify-content: space-between;
@@ -39,11 +43,26 @@
     }
 
     .form-control {
+      padding: 0 10px;
       width: 236px;
       height: 31px;
       border-radius: 7px;
       border: solid 1px #979797;
       background-color: #fff;
+    }
+  }
+}
+
+
+@media (max-width: 750px) {
+  .modal {
+    height: 380px;
+    padding: 85px 35px 37px 35px;
+
+    .cancel {
+      img {
+        max-width: 18px;
+      }
     }
   }
 }

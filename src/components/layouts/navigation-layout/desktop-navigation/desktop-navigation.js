@@ -5,7 +5,7 @@ import './desktop-navigation.scss';
 
 export const DesktopNavigation = ({navigationList, activeLink}) => {
     const activeLinkStyles = {
-        textDecoration: "underline",
+        borderBottom: "2px solid #fff",
       };
 
     return(
