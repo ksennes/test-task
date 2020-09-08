@@ -5,11 +5,14 @@ import {
   JOG_ADD_REQUEST,
   JOG_ADD_SUCCESS,
   JOG_ADD_FAILED,
+  JOG_EDIT_REQUEST,
+  JOG_EDIT_SUCCESS,
+  JOG_EDIT_FAILED
 } from "./jogs.actions";
 import { format, fromUnixTime } from "date-fns";
 
 const initialState = {
-  jogs: null,
+  jogs: [],
   error: null,
   pending: false,
 };
@@ -48,6 +51,25 @@ export const jogsReducer = (state = initialState, { type, payload }) => {
         pending: payload.pending
       };
     case JOG_ADD_FAILED:
+      return {
+        ...state,
+        error: payload.error,
+        pending: payload.pending
+      };
+      case JOG_EDIT_REQUEST:
+      return {
+        ...state,
+        pending: payload.pending
+      };
+    case JOG_EDIT_SUCCESS:
+      return {
+        ...state,
+        jogs: state.jogs.map((j) =>
+        payload.jog.jog_id === j.jog_id ? payload.jog : j
+      ),
+        pending: payload.pending
+      };
+    case JOG_EDIT_FAILED:
       return {
         ...state,
         error: payload.error,

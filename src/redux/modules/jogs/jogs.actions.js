@@ -48,6 +48,7 @@ export const addJogAction = (token, jog) => (dispatch) => {
 
     addJog(token, jog)
     .then(res => {
+        console.log(res.data.response);
         dispatch(addJogSuccessAction(res.data.response));
     })
     .catch(err => {
